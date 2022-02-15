@@ -8,9 +8,9 @@ package com.sauces.sistemanominas;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
+import java.util.Map;
+import java.util.TreeMap;
 
 /**
  *
@@ -18,56 +18,54 @@ import java.util.Set;
  */
 public class SistemaNominas extends ComparadorSueldo {
 
-    private Set<Empleado> empleados;
+    private Map<String,Empleado> empleados;
 
     public SistemaNominas() {
-        this.empleados = new HashSet<>();
+        this.empleados = new TreeMap<>();
     }
 
-    public Set<Empleado> getEmpleados() {
+    public Map<String,Empleado> getEmpleados() {
         return empleados;
     }
 
-    public void setEmpleados(Set<Empleado> empleados) {
+    public void setEmpleados(Map<String,Empleado> empleados) {
         this.empleados = empleados;
     }
 
     public boolean incluirEmpleado(Empleado empleado) {
-        boolean incluido = false;
-        if (empleado != null && !empleados.contains(empleado)) {
-            incluido = empleados.add(empleado);
-        }
+        boolean incluido=false;
+            if(empleados.putIfAbsent(empleado.getDni(), empleado)==null){
+            incluido=true;
+            }
         return incluido;
     }
 
     public Empleado getEmpleado(String dni) {
-        for (Empleado em : empleados) {
-            if (dni.equals(em.getDni())) {
-                return em;
-            }
+        if(empleados.containsKey(dni)){
+            return empleados.get(dni);
         }
         return null;
     }
 
     public boolean eliminarEmpleado(Empleado empleado) {
         if (empleado != null) {
-            return empleados.remove(empleado);
+            return empleados.remove(empleado.getDni(),empleado);
         }
         return false;
     }
 
     public List<Empleado> listarEmpleados() {
-        return new ArrayList<>(empleados);
+        return new ArrayList<>(empleados.values());
     }
 
     public List<Empleado> listarEmpleadosPorDNI() {
-        List<Empleado> lista = new ArrayList<>(empleados);
+        List<Empleado> lista = new ArrayList<>(empleados.values());
         Collections.sort(lista);
         return lista;
     }
 
     public List<Empleado> listarEmpleadosPorNombre() {
-        List<Empleado> salida = new ArrayList<>(empleados);
+        List<Empleado> salida = new ArrayList<>(empleados.values());
 
         Collections.sort(salida, new Comparator<Empleado>() {
             @Override
@@ -79,14 +77,14 @@ public class SistemaNominas extends ComparadorSueldo {
     }
 
     public List<Empleado> listarEmpleadosPorSueldo() {
-        List<Empleado> lista = new ArrayList<>(empleados);
+        List<Empleado> lista = new ArrayList<>(empleados.values());
         Collections.sort(lista, new ComparadorSueldo());
         return lista;
     }
 
     public float getTotalSalarios() {
         float acum = 0;
-        for (Empleado e : empleados) {
+        for (Empleado e : empleados.values()) {
             acum += e.ingresos();
         }
         return acum;
