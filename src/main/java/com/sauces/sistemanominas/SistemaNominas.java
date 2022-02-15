@@ -8,7 +8,9 @@ package com.sauces.sistemanominas;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -16,17 +18,17 @@ import java.util.List;
  */
 public class SistemaNominas extends ComparadorSueldo {
 
-    private List<Empleado> empleados;
+    private Set<Empleado> empleados;
 
     public SistemaNominas() {
-        this.empleados = new ArrayList<>();
+        this.empleados = new HashSet<>();
     }
 
-    public List<Empleado> getEmpleados() {
+    public Set<Empleado> getEmpleados() {
         return empleados;
     }
 
-    public void setEmpleados(List<Empleado> empleados) {
+    public void setEmpleados(Set<Empleado> empleados) {
         this.empleados = empleados;
     }
 
