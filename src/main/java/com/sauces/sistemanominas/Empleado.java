@@ -13,21 +13,21 @@ import java.util.Objects;
  * @author daw1
  */
 public abstract class Empleado implements Comparable<Empleado> {
-    private String dni;
+    private Dni dni;
     private String nombre;
     public Empleado(){
     }
-    public Empleado(String dni, String nombre) {
-        this.dni = dni;
+    public Empleado(String dni, String nombre) throws DniException {
+        this.dni = new Dni(dni);
         this.nombre = nombre;
     }
 
-    public String getDni() {
+    public Dni getDni() {
         return dni;
     }
 
-    public void setDni(String dni) {
-        this.dni = dni;
+    public void setDni(String dni) throws DniException {
+        this.dni = new Dni(dni);
     }
 
     public String getNombre() {

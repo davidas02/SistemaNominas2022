@@ -7,6 +7,8 @@ package com.sauces.sistemanominas;
 
 import java.util.List;
 import java.util.Scanner;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -55,13 +57,21 @@ public class SN {
                                 dni = teclado.nextLine();
                                 System.out.println("Salario del empleado");
                                 salario = teclado.nextFloat();
-                                if (sn.incluirEmpleado(new EmpleadoFijo(dni, nombre, salario))) {
-                                    System.out.println("Empleado Fijo Incluido con exito");
-                                    System.out.println(sn.getEmpleado(dni));
-                                } else {
-                                    System.out.println("No se ha podido incluir el empleado");
+                            {
+                                try {
+                                    if (sn.incluirEmpleado(new EmpleadoFijo(dni, nombre, salario))) {
+                                        System.out.println("Empleado Fijo Incluido con exito");
+                                        System.out.println(sn.getEmpleado(dni));
+                                    } else {
+                                        System.out.println("No se ha podido incluir el empleado");
+                                    }
+                                } catch (DniException de) {
+                                    System.out.println(de.getMessage());
                                 }
+                            }
                                 break;
+
+
                             case 2:
                                 System.out.println("Contratar Empleado Eventual");
                                 System.out.println("Nombre del empleado");
@@ -72,13 +82,20 @@ public class SN {
                                 salario = teclado.nextFloat();
                                 System.out.println("Horas trabajadas por el empleado");
                                 horas = teclado.nextInt();
-                                if (sn.incluirEmpleado(new EmpleadoEventual(dni, nombre, salario, horas))) {
-                                    System.out.println("Empleado Eventual Incluido con exito");
-                                    System.out.println(sn.getEmpleado(dni));
-                                } else {
-                                    System.out.println("No se ha podido incluir el empleado");
+                            {
+                                try {
+                                    if (sn.incluirEmpleado(new EmpleadoEventual(dni, nombre, salario, horas))) {
+                                        System.out.println("Empleado Eventual Incluido con exito");
+                                        System.out.println(sn.getEmpleado(dni));
+                                    } else {
+                                        System.out.println("No se ha podido incluir el empleado");
+                                    }
+                                } catch (DniException de) {
+                                    System.out.println(de.getMessage());
                                 }
+                            }
                                 break;
+
                         }
 
                     } while (opcion2 != 0);
