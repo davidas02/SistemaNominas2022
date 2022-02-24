@@ -17,8 +17,8 @@ public abstract class Empleado implements Comparable<Empleado> {
     private String nombre;
     public Empleado(){
     }
-    public Empleado(String dni, String nombre) throws DniException {
-        this.dni = new Dni(dni);
+    public Empleado(Dni dni, String nombre) throws DniException {
+        this.dni = dni;
         this.nombre = nombre;
     }
 
@@ -26,8 +26,8 @@ public abstract class Empleado implements Comparable<Empleado> {
         return dni;
     }
 
-    public void setDni(String dni) throws DniException {
-        this.dni = new Dni(dni);
+    public void setDni(Dni dni) throws DniException {
+        this.dni = dni;
     }
 
     public String getNombre() {
@@ -40,7 +40,7 @@ public abstract class Empleado implements Comparable<Empleado> {
 
     @Override
     public String toString() {
-        return dni + "," + nombre;
+        return dni.toString() + "," + nombre;
     }
 
     @Override
@@ -65,10 +65,10 @@ public abstract class Empleado implements Comparable<Empleado> {
             return false;
         }
         if (obj instanceof Empleado) {
-        final Empleado other = (Empleado) obj;
-        if (Objects.equals(this.dni, other.dni)) {
-            return true;
-        }
+            final Empleado other = (Empleado) obj;
+            if (Objects.equals(this.dni, other.dni)) {
+                return true;
+            }
         }
         return false;
     }

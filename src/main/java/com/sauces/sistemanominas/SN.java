@@ -50,16 +50,16 @@ public class SN {
                         teclado.nextLine();
                         switch (opcion2) {
                             case 1:
-                                System.out.println("Contratar Empleado Fijo");
-                                System.out.println("Nombre del empleado");
-                                nombre = teclado.nextLine();
-                                System.out.println("DNI del empleado");
-                                dni = teclado.nextLine();
-                                System.out.println("Salario del empleado");
-                                salario = teclado.nextFloat();
-                            {
                                 try {
-                                    if (sn.incluirEmpleado(new EmpleadoFijo(dni, nombre, salario))) {
+                                    System.out.println("Contratar Empleado Fijo");
+                                    System.out.println("Nombre del empleado");
+                                    nombre = teclado.nextLine();
+                                    System.out.println("DNI del empleado");
+                                    dni = teclado.nextLine();
+                                    System.out.println("Salario del empleado");
+                                    salario = teclado.nextFloat();
+                                    
+                                    if (sn.incluirEmpleado(new EmpleadoFijo(Dni.valueOf(dni), nombre, salario))) {
                                         System.out.println("Empleado Fijo Incluido con exito");
                                         System.out.println(sn.getEmpleado(dni));
                                     } else {
@@ -68,23 +68,23 @@ public class SN {
                                 } catch (DniException de) {
                                     System.out.println(de.getMessage());
                                 }
-                            }
+                            
                                 break;
 
 
                             case 2:
-                                System.out.println("Contratar Empleado Eventual");
-                                System.out.println("Nombre del empleado");
-                                nombre = teclado.nextLine();
-                                System.out.println("DNI del empleado");
-                                dni = teclado.nextLine();
-                                System.out.println("Salario por hora del empleado");
-                                salario = teclado.nextFloat();
-                                System.out.println("Horas trabajadas por el empleado");
-                                horas = teclado.nextInt();
-                            {
                                 try {
-                                    if (sn.incluirEmpleado(new EmpleadoEventual(dni, nombre, salario, horas))) {
+                                    System.out.println("Contratar Empleado Eventual");
+                                    System.out.println("Nombre del empleado");
+                                    nombre = teclado.nextLine();
+                                    System.out.println("DNI del empleado");
+                                    dni = teclado.nextLine();
+                                    System.out.println("Salario por hora del empleado");
+                                    salario = teclado.nextFloat();
+                                    System.out.println("Horas trabajadas por el empleado");
+                                    horas = teclado.nextInt();
+                                    
+                                    if (sn.incluirEmpleado(new EmpleadoEventual(Dni.valueOf(dni), nombre, salario, horas))) {
                                         System.out.println("Empleado Eventual Incluido con exito");
                                         System.out.println(sn.getEmpleado(dni));
                                     } else {
@@ -93,7 +93,7 @@ public class SN {
                                 } catch (DniException de) {
                                     System.out.println(de.getMessage());
                                 }
-                            }
+                            
                                 break;
 
                         }
@@ -101,16 +101,24 @@ public class SN {
                     } while (opcion2 != 0);
 
                     break;
+                    
                 case 2:
                     System.out.println("Consultar empleado");
                     System.out.println("Introduce el DNI del empleado a Consultar");
                     dni = teclado.nextLine();
-                    if (sn.getEmpleado(dni) != null) {
-                        System.out.println(sn.getEmpleado(dni));
-                    } else {
-                        System.out.println("El empleado no existe en el sistema");
+                {
+                    try {
+                        if (sn.getEmpleado(Dni.valueOf(dni)) != null) {
+                            System.out.println(sn.getEmpleado(Dni.valueOf(dni)));
+                        } else {
+                            System.out.println("El empleado no existe en el sistema");
+                        }
+                    } catch (DniException de) {
+                        System.out.println(de.getMessage());
                     }
+                }
                     break;
+
                 case 3:
                     System.out.println("Despedir empleado");
                     System.out.println("Introduce el DNI del empleado a Despedir");
@@ -118,12 +126,16 @@ public class SN {
                     System.out.println("Está seguro?? Entonces escriba SI de lo contrario escriba NO");
                     seguro = teclado.nextLine();
                     if (seguro.equals("SI")) {
-                        if (sn.getEmpleado(dni) != null){
-                            sn.eliminarEmpleado(sn.getEmpleado(dni));
-                            System.out.println("Empleado despedido con exito");
-                        } else {
-                            System.out.println("No se ha podido despedir al empleado");
-                        }
+                try {
+                    if (sn.getEmpleado(Dni.valueOf(dni)) != null){
+                        sn.eliminarEmpleado(sn.getEmpleado(dni));
+                        System.out.println("Empleado despedido con exito");
+                    } else {
+                        System.out.println("No se ha podido despedir al empleado");
+                    }
+                } catch (DniException de) {
+                    System.out.println(de.getMessage());
+                }
                     }
                     break;
                 case 4:

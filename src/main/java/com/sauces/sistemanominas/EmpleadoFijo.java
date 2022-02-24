@@ -12,7 +12,7 @@ package com.sauces.sistemanominas;
 public class EmpleadoFijo extends Empleado {
     private float salario;
 
-    public EmpleadoFijo(String dni, String nombre,float salario) throws DniException {
+    public EmpleadoFijo(Dni dni, String nombre,float salario) throws DniException {
         super(dni, nombre);
         this.salario = salario;
     }

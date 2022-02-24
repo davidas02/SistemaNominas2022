@@ -16,16 +16,15 @@ import java.util.regex.Pattern;
 public class Dni implements Comparable<Dni>{
     private String numero;
     private char letra;
-
+    public Dni() {
+    }
     /**
      * Constructor de la clase dni
      * @param numero Numeros del dni
      * @param letra Letra del dni
      * @throws DniException Excepcion de la clase Sni
      */
-    public Dni() {
-    }
-
+    
     public Dni(String numero, char letra) throws DniException {
         if(!esValido(numero+letra)){
             throw new DniException("Formato incorrecto del DNI");
@@ -43,8 +42,8 @@ public class Dni implements Comparable<Dni>{
         if(!esValido(dni)){
             throw new DniException("Formato incorrecto del DNI");
         }
-        this.numero=dni.substring(0,7);
-        letra=dni.charAt(8);
+        this.numero =dni.substring(0,7) ;
+        this.letra = dni.charAt(8);
     }
 
    
@@ -137,25 +136,25 @@ public class Dni implements Comparable<Dni>{
     public int compareTo(Dni dni) {
         return this.numero.compareTo(dni.numero);
     }
-
+    public static Dni valueOf(String dni) throws DniException{
+        return new Dni(dni);
+    }
     /**
      *
      * @param dni
      * @return
      */
     public static boolean esValido(String dni){
-    boolean correcto=false;
-    int resto;
-    String patron="([0-9]{8})([A-Z])";
-    String letras="TRWAGMYFPDXBNJZSQVHLCKE";
-    Pattern p=Pattern.compile(patron);
-    Matcher m=p.matcher(dni);
+        boolean correcto=false;
+        int resto;
+        String patron="([0-9]{8})([A-Z])";
+        String letras="TRWAGMYFPDXBNJZSQVHLCKE";
+        Pattern p=Pattern.compile(patron);
+        Matcher m=p.matcher(dni);
         if(m.matches()){
             resto=Integer.parseInt(m.group(1))%23;
             if(letras.charAt(resto)==m.group(2).charAt(0)){
                 correcto=true;
-            } else {
-
             }
         }
         return correcto;

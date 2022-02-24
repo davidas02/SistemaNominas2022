@@ -61,7 +61,12 @@ public class SistemaNominas extends ComparadorSueldo {
      * @param dni dni del empleado a buscar
      * @return Si el empleado se encuentra en la lista lo devuelve si no no devuelve nada
      */
-    public Empleado getEmpleado(String dni) {
+    public Empleado getEmpleado(String dni) throws DniException {
+       
+            return empleados.get(Dni.valueOf(dni));
+        
+    }
+    public Empleado getEmpleado(Dni dni) throws DniException {
         if(empleados.containsKey(dni)){
             return empleados.get(dni);
         }
