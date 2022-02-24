@@ -23,6 +23,9 @@ public class Dni implements Comparable<Dni>{
      * @param letra Letra del dni
      * @throws DniException Excepcion de la clase Sni
      */
+    public Dni() {
+    }
+
     public Dni(String numero, char letra) throws DniException {
         if(!esValido(numero+letra)){
             throw new DniException("Formato incorrecto del DNI");
