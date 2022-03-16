@@ -23,12 +23,15 @@ public class SN {
         // TODO code application logic here
         Scanner teclado = new Scanner(System.in);
         int opcion, opcion2;
-        String seguro;
+        String seguro,em;
         String dni, nombre;
         float salario;
         int horas;
-        List<Empleado> listado;
+        List<Empleado> listado=null;
         SistemaNominas sn = new SistemaNominas();
+        EmpleadoDao empleadoDao;
+        String extension;
+        int posPunto;
         do {
             System.out.println("1.-Contratar Empleado");
             System.out.println("2.-Consultar Empleado");
@@ -37,6 +40,8 @@ public class SN {
             System.out.println("5.-Listar Empleados por sueldo");
             System.out.println("6.-Listar Empleados por nombre");
             System.out.println("7.-Consultar total Salarios");
+            System.out.println("8.-Guardar Empleados");
+            System.out.println("8.-Cargar Empleados");
             System.out.println("0.-Salir");
             opcion = teclado.nextInt();
             teclado.nextLine();
@@ -158,6 +163,33 @@ public class SN {
                     break;
                 case 7:
                     System.out.println(sn.getTotalSalarios());
+                    break;
+                case 8:
+                    System.out.println("8.-Guardar Empleados");
+                    System.out.println("Introduce el nombre del fichero a guardar");
+                    em=teclado.nextLine();
+                    
+                    empleadoDao=new EmpleadoDaoCsv(em);
+                    listado=sn.listarEmpleados();
+                    try {
+                        empleadoDao.insertar(listado);
+                    } catch (DaoException ex) {
+                        System.out.println(ex.getMessage());
+                    }
+                    break;
+
+                case 9:
+                    System.out.println("9.-Cargar Empleados");
+                    System.out.println("Introduce el nombre del fichero a cargar");
+                    em=teclado.nextLine();
+                    empleadoDao=new EmpleadoDaoCsv(em);
+                    try {
+                        empleadoDao.listar();
+                    } catch (DniException de) {
+                        System.out.println(de.getMessage());
+                }catch (DaoException ex) {
+                        System.out.println(ex.getMessage());
+                    } 
                     break;
                 default:
                     System.out.println("Opcion no disponible");

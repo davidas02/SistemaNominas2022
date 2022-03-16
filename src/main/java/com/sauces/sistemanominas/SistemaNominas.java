@@ -19,7 +19,7 @@ import java.util.TreeMap;
 public class SistemaNominas extends ComparadorSueldo {
 
     private Map<Dni,Empleado> empleados;
-
+    private EmpleadoDao empleadoDao;
     /**
      *  Constructor de la clase SistemaNominas
      */
@@ -42,6 +42,18 @@ public class SistemaNominas extends ComparadorSueldo {
     public void setEmpleados(Map<Dni,Empleado> empleados) {
         this.empleados = empleados;
     }
+
+    public EmpleadoDao getEmpleadoDao() {
+        return empleadoDao;
+    }
+    /**
+     *  Metodo que establece la clase para guardar los empleados
+     * @param empleadoDao 
+     */
+    public void setEmpleadoDao(EmpleadoDao empleadoDao) {
+        this.empleadoDao = empleadoDao;
+    }
+    
 
     /**
      *  Metodo que incluye un empleado si no se ha incluido antes
@@ -139,5 +151,20 @@ public class SistemaNominas extends ComparadorSueldo {
             acum += e.ingresos();
         }
         return acum;
+    }
+    public int guardarEmpleados() throws DaoException{
+        int n=0;
+        if(empleadoDao != null){
+            n=empleadoDao.insertar((List)empleados.values());
+        }
+        return n;
+    }
+    public int cargarEmpleados() throws DaoException, DniException{
+        int n=0;
+        if(empleadoDao!=null){
+            empleadoDao.listar();
+            n=1;
+        }
+        return n;
     }
 }
