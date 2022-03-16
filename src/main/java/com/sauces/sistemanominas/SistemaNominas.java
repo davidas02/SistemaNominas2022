@@ -153,17 +153,20 @@ public class SistemaNominas extends ComparadorSueldo {
         return acum;
     }
     public int guardarEmpleados() throws DaoException{
-        int n=0;
         if(empleadoDao != null){
-            n=empleadoDao.insertar((List)empleados.values());
+          return empleadoDao.insertar(new ArrayList<>(empleados.values()));
         }
-        return n;
+        return 0;
     }
     public int cargarEmpleados() throws DaoException, DniException{
         int n=0;
         if(empleadoDao!=null){
-            empleadoDao.listar();
-            n=1;
+            List<Empleado> listado=empleadoDao.listar();
+            for(Empleado e:listado){
+                if(incluirEmpleado(e)){
+                n++;
+                }
+            }
         }
         return n;
     }

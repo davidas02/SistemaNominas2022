@@ -38,6 +38,7 @@ public class EmpleadoDaoCsv implements EmpleadoDao{
         List<Empleado> listado=new ArrayList<>();
         String linea;
         String[] tokens;
+        String tipo;
         String dni,nombre;
         float salario,salarioHora;
         int horas;
@@ -46,21 +47,20 @@ public class EmpleadoDaoCsv implements EmpleadoDao{
             linea=entrada.readLine();
             while(linea!=null){
                 tokens=linea.split(",");
-                if(tokens[0].equals("EmpleadoFijo")){
-                    dni=tokens[1];
+                tipo=tokens[0];
+                dni=tokens[1];
                     nombre=tokens[2];
+                switch(tipo){
+                    case "EmpleadoFijo":
                     salario=Float.parseFloat(tokens[3]);
-                empleado=new EmpleadoFijo(Dni.valueOf(dni), nombre, salario);
-                }else{
-                    if(tokens[0].equals("EmpleadoEventual")){
-                       dni=tokens[1];
-                       nombre=tokens[2];
+                    empleado=new EmpleadoFijo(Dni.valueOf(dni), nombre, salario);
+                        break;
+                    case "EmpleadoEventual":
                        salarioHora=Float.parseFloat(tokens[3]);
                        horas=Integer.parseInt(tokens[4]);
                        empleado=new EmpleadoEventual(Dni.valueOf(dni), nombre, salarioHora, horas);
-                    }
-                }
-                listado.add(empleado);
+                       break;
+            }
                 linea=entrada.readLine();
             }
         }catch (DniException de) {
@@ -77,12 +77,14 @@ public class EmpleadoDaoCsv implements EmpleadoDao{
         String linea;
         try(BufferedWriter salida=Files.newBufferedWriter(path)){
             for(Empleado e:listado){
-                linea=e.getClass().getSimpleName()+e.toString();
+                linea=e.getClass().getSimpleName()+","+e.toString();
                 salida.write(linea);
                 salida.newLine();
+                n++;
             }
+        
         } catch (IOException ex) {
-            Logger.getLogger(EmpleadoDaoCsv.class.getName()).log(Level.SEVERE, null, ex);
+           throw new DaoException(ex.getMessage());
         }  
         return n;
     }

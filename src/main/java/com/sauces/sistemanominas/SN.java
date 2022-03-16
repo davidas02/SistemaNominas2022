@@ -29,7 +29,7 @@ public class SN {
         int horas;
         List<Empleado> listado=null;
         SistemaNominas sn = new SistemaNominas();
-        EmpleadoDao empleadoDao;
+        EmpleadoDao empleadoDao=null;
         String extension;
         int posPunto;
         do {
@@ -41,7 +41,7 @@ public class SN {
             System.out.println("6.-Listar Empleados por nombre");
             System.out.println("7.-Consultar total Salarios");
             System.out.println("8.-Guardar Empleados");
-            System.out.println("8.-Cargar Empleados");
+            System.out.println("9.-Cargar Empleados");
             System.out.println("0.-Salir");
             opcion = teclado.nextInt();
             teclado.nextLine();
@@ -168,11 +168,10 @@ public class SN {
                     System.out.println("8.-Guardar Empleados");
                     System.out.println("Introduce el nombre del fichero a guardar");
                     em=teclado.nextLine();
-                    
                     empleadoDao=new EmpleadoDaoCsv(em);
-                    listado=sn.listarEmpleados();
                     try {
-                        empleadoDao.insertar(listado);
+                      int n= sn.guardarEmpleados();
+                       System.out.println("Se han cargado "+n+" empleados");
                     } catch (DaoException ex) {
                         System.out.println(ex.getMessage());
                     }
@@ -183,8 +182,10 @@ public class SN {
                     System.out.println("Introduce el nombre del fichero a cargar");
                     em=teclado.nextLine();
                     empleadoDao=new EmpleadoDaoCsv(em);
+                    int n;
                     try {
-                        empleadoDao.listar();
+                      n=sn.cargarEmpleados();
+                        System.out.println("Se han incluido "+n+" empleados");
                     } catch (DniException de) {
                         System.out.println(de.getMessage());
                 }catch (DaoException ex) {
