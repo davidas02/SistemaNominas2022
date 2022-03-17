@@ -23,15 +23,12 @@ public class SN {
         // TODO code application logic here
         Scanner teclado = new Scanner(System.in);
         int opcion, opcion2;
-        String seguro,em;
+        String seguro,fichero;
         String dni, nombre;
         float salario;
         int horas;
         List<Empleado> listado=null;
         SistemaNominas sn = new SistemaNominas();
-        EmpleadoDao empleadoDao=null;
-        String extension;
-        int posPunto;
         do {
             System.out.println("1.-Contratar Empleado");
             System.out.println("2.-Consultar Empleado");
@@ -63,7 +60,6 @@ public class SN {
                                     dni = teclado.nextLine();
                                     System.out.println("Salario del empleado");
                                     salario = teclado.nextFloat();
-                                    
                                     if (sn.incluirEmpleado(new EmpleadoFijo(Dni.valueOf(dni), nombre, salario))) {
                                         System.out.println("Empleado Fijo Incluido con exito");
                                         System.out.println(sn.getEmpleado(dni));
@@ -88,7 +84,6 @@ public class SN {
                                     salario = teclado.nextFloat();
                                     System.out.println("Horas trabajadas por el empleado");
                                     horas = teclado.nextInt();
-                                    
                                     if (sn.incluirEmpleado(new EmpleadoEventual(Dni.valueOf(dni), nombre, salario, horas))) {
                                         System.out.println("Empleado Eventual Incluido con exito");
                                         System.out.println(sn.getEmpleado(dni));
@@ -167,8 +162,8 @@ public class SN {
                 case 8:
                     System.out.println("8.-Guardar Empleados");
                     System.out.println("Introduce el nombre del fichero a guardar");
-                    em=teclado.nextLine();
-                    empleadoDao=new EmpleadoDaoCsv(em);
+                    fichero=teclado.nextLine();
+                    sn.setEmpleadoDao(getDao(fichero));
                     try {
                       int n= sn.guardarEmpleados();
                        System.out.println("Se han cargado "+n+" empleados");
@@ -180,8 +175,8 @@ public class SN {
                 case 9:
                     System.out.println("9.-Cargar Empleados");
                     System.out.println("Introduce el nombre del fichero a cargar");
-                    em=teclado.nextLine();
-                    empleadoDao=new EmpleadoDaoCsv(em);
+                    fichero=teclado.nextLine();
+                    sn.setEmpleadoDao(getDao(fichero));
                     int n;
                     try {
                       n=sn.cargarEmpleados();
@@ -201,5 +196,22 @@ public class SN {
             }
         } while (opcion != 0);
     }
-
+    public static EmpleadoDao getDao(String fichero){
+        EmpleadoDao ed=null;
+        int posPunto=fichero.lastIndexOf(".")+1;
+        String extension=fichero.substring(posPunto);
+        switch(extension){
+            case "csv":
+                ed=new EmpleadoDaoCsv(fichero);
+                break;
+            case "obj":
+                ed=new EmpleadoDaoObj(fichero);
+                break;
+            case "xml":
+                break;
+            case "json":
+                break;
+        }
+        return ed;
+    }
 }

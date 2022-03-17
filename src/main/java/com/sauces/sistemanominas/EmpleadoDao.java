@@ -12,6 +12,6 @@ import java.util.List;
  * @author daw1
  */
 public interface EmpleadoDao{
-    public List<Empleado> listar() throws DaoException,DniException;
+    public List<Empleado> listar() throws DaoException;
     public int insertar(List<Empleado> listado)throws DaoException;
 }

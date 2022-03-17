@@ -11,8 +11,6 @@ import java.io.IOException;
 import java.nio.file.*;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -34,7 +32,7 @@ public class EmpleadoDaoCsv implements EmpleadoDao{
     }
 
     @Override
-    public List<Empleado> listar() throws DaoException,DniException{
+    public List<Empleado> listar() throws DaoException{
         List<Empleado> listado=new ArrayList<>();
         String linea;
         String[] tokens;
@@ -49,11 +47,12 @@ public class EmpleadoDaoCsv implements EmpleadoDao{
                 tokens=linea.split(",");
                 tipo=tokens[0];
                 dni=tokens[1];
-                    nombre=tokens[2];
+                nombre=tokens[2];
                 switch(tipo){
                     case "EmpleadoFijo":
                     salario=Float.parseFloat(tokens[3]);
                     empleado=new EmpleadoFijo(Dni.valueOf(dni), nombre, salario);
+                    
                         break;
                     case "EmpleadoEventual":
                        salarioHora=Float.parseFloat(tokens[3]);
@@ -61,12 +60,11 @@ public class EmpleadoDaoCsv implements EmpleadoDao{
                        empleado=new EmpleadoEventual(Dni.valueOf(dni), nombre, salarioHora, horas);
                        break;
             }
+                listado.add(empleado);
                 linea=entrada.readLine();
             }
-        }catch (DniException de) {
-           throw new DniException(de.getMessage());
-        } catch (IOException ex) { 
-            throw new DaoException(ex.getMessage());
+        }catch (DniException | IOException de) {
+           throw new DaoException(de.getMessage());
         } 
         return listado;
     }
@@ -82,9 +80,8 @@ public class EmpleadoDaoCsv implements EmpleadoDao{
                 salida.newLine();
                 n++;
             }
-        
-        } catch (IOException ex) {
-           throw new DaoException(ex.getMessage());
+        }catch(IOException ex){
+            throw new DaoException(ex.getMessage());
         }  
         return n;
     }

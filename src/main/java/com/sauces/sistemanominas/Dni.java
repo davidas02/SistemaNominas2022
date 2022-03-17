@@ -42,7 +42,7 @@ public class Dni implements Comparable<Dni>{
         if(!esValido(dni)){
             throw new DniException("Formato incorrecto del DNI");
         }
-        this.numero =dni.substring(0,7) ;
+        this.numero =dni.substring(0,8) ;
         this.letra = dni.charAt(8);
     }
 

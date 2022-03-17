@@ -1,5 +1,6 @@
 package com.sauces.sistemanominas;
 
+import java.io.Serializable;
 import java.util.Objects;
 
 /*
@@ -12,7 +13,7 @@ import java.util.Objects;
  *
  * @author daw1
  */
-public abstract class Empleado implements Comparable<Empleado> {
+public abstract class Empleado implements Comparable<Empleado>,Serializable {
     private Dni dni;
     private String nombre;
     public Empleado(){
