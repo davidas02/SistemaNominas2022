@@ -35,18 +35,23 @@ public class EmpleadoDaoObj implements EmpleadoDao{
     public void setPath(Path path) {
         this.path = path;
     }
+    /**
+     * Metodo que devuelve una lista de empleados que se han añadido al sistema
+     * @return Devuelve una lista de empleados que se han añadido al sistema
+     * @throws DaoException 
+     */
     @Override
     public List<Empleado> listar() throws DaoException {
         List<Empleado> listado=new ArrayList<>();
         try(InputStream is=Files.newInputStream(path);
             ObjectInputStream entrada=new ObjectInputStream(is)){
-            while(entrada.available()>0){
+            while(is.available()>0){
                 listado.add((Empleado)entrada.readObject());
             }
-        } catch (IOException ex) {
-            Logger.getLogger(EmpleadoDaoObj.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
-            Logger.getLogger(EmpleadoDaoObj.class.getName()).log(Level.SEVERE, null, ex);
+            throw new DaoException(ex.getMessage());
+        } catch (IOException ex) {
+           throw new DaoException(ex.getMessage());
         }
         return listado;
     }

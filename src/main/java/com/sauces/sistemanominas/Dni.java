@@ -5,6 +5,7 @@
  */
 package com.sauces.sistemanominas;
 
+import java.io.Serializable;
 import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,7 +14,7 @@ import java.util.regex.Pattern;
  *  Clase dni 
  * @author David Aparicio Sir
  */
-public class Dni implements Comparable<Dni>{
+public class Dni implements Comparable<Dni>,Serializable{
     private String numero;
     private char letra;
     public Dni() {

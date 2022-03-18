@@ -30,7 +30,11 @@ public class EmpleadoDaoCsv implements EmpleadoDao{
     public void setPath(Path path) {
         this.path = path;
     }
-
+    /**
+     * Metodo que devuelve una lista de empleados que se han añadido al sistema
+     * @return Devuelve una lista de empleados que se han añadido al sistema
+     * @throws DaoException 
+     */
     @Override
     public List<Empleado> listar() throws DaoException{
         List<Empleado> listado=new ArrayList<>();
@@ -65,7 +69,9 @@ public class EmpleadoDaoCsv implements EmpleadoDao{
             }
         }catch (DniException | IOException de) {
            throw new DaoException(de.getMessage());
-        } 
+        } catch(Exception ex){
+        throw new DaoException("Error de formato");
+        }
         return listado;
     }
 

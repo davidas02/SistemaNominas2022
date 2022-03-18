@@ -1,0 +1,21 @@
+[
+  {
+    "type": "Eventual",
+    "salarioHora": 10.0,
+    "horas": 100,
+    "dni": {
+      "numero": "21742103",
+      "letra": "L"
+    },
+    "nombre": "Raul"
+  },
+  {
+    "type": "Fijo",
+    "salario": 1100.0,
+    "dni": {
+      "numero": "21742104",
+      "letra": "C"
+    },
+    "nombre": "David"
+  }
+]

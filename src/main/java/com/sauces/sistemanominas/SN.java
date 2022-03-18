@@ -208,8 +208,10 @@ public class SN {
                 ed=new EmpleadoDaoObj(fichero);
                 break;
             case "xml":
+                ed=new EmpleadoDaoXml(fichero);
                 break;
             case "json":
+                ed=new EmpleadoDaoJson(fichero);
                 break;
         }
         return ed;
