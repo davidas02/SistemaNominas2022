@@ -74,7 +74,12 @@ public class EmpleadoDaoCsv implements EmpleadoDao{
         }
         return listado;
     }
-
+    /**
+     * 
+     * @param listado listado de empleados
+     * @return devuelve un fichero con formato csv
+     * @throws DaoException 
+     */
     @Override
     public int insertar(List<Empleado> listado) throws DaoException {
         int n=0;

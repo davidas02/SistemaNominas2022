@@ -57,15 +57,19 @@ public class EmpleadoDaoJson implements EmpleadoDao {
         builder.registerTypeAdapterFactory(empleadoAdapter);
         Gson gson = builder.create();
         List<Empleado> listadoEmpleados;
-        Path path = Paths.get("empleados.json");
         try (BufferedReader br = Files.newBufferedReader(path)) {
             listadoEmpleados = gson.fromJson(br, tipo);
         } catch (IOException ex) {
-            throw new DaoException(ex.getMessage());
+            throw new DaoException(ex.toString());
         }
         return listadoEmpleados;
     }
-
+/**
+     * 
+     * @param listado listado de empleados
+     * @return devuelve un fichero con formato xml
+     * @throws DaoException 
+     */
     @Override
     public int insertar(List<Empleado> listado) throws DaoException {
         java.lang.reflect.Type tipo = new com.google.gson.reflect.TypeToken<List<Empleado>>() {

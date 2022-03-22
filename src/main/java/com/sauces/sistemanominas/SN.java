@@ -27,6 +27,7 @@ public class SN {
         String dni, nombre;
         float salario;
         int horas;
+        int n;
         List<Empleado> listado=null;
         SistemaNominas sn = new SistemaNominas();
         do {
@@ -165,7 +166,7 @@ public class SN {
                     fichero=teclado.nextLine();
                     sn.setEmpleadoDao(getDao(fichero));
                     try {
-                      int n= sn.guardarEmpleados();
+                     n= sn.guardarEmpleados();
                        System.out.println("Se han cargado "+n+" empleados");
                     } catch (DaoException ex) {
                         System.out.println(ex.getMessage());
@@ -177,7 +178,6 @@ public class SN {
                     System.out.println("Introduce el nombre del fichero a cargar");
                     fichero=teclado.nextLine();
                     sn.setEmpleadoDao(getDao(fichero));
-                    int n;
                     try {
                       n=sn.cargarEmpleados();
                         System.out.println("Se han incluido "+n+" empleados");
@@ -196,7 +196,7 @@ public class SN {
             }
         } while (opcion != 0);
     }
-    public static EmpleadoDao getDao(String fichero){
+    private static EmpleadoDao getDao(String fichero){
         EmpleadoDao ed=null;
         int posPunto=fichero.lastIndexOf(".")+1;
         String extension=fichero.substring(posPunto);

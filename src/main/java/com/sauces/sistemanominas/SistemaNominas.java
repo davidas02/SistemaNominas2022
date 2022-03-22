@@ -152,12 +152,26 @@ public class SistemaNominas extends ComparadorSueldo {
         }
         return acum;
     }
+    /**
+     * Metodo que guarda los empleados en el fichero especificado utilizando la clase insertar de EmpleadoDao
+     * @return
+     * @throws DaoException 
+     */
     public int guardarEmpleados() throws DaoException{
+        int n=0;
         if(empleadoDao != null){
-          return empleadoDao.insertar(new ArrayList<>(empleados.values()));
+         n=empleadoDao.insertar(new ArrayList<>(empleados.values()));
+        }else{
+            throw new DaoException("No se ha pudido encontrar la extension del fichero");
         }
-        return 0;
+        return n;
     }
+    /**
+     * Metodo que carga los empleados de un fichero especificado utilizando la clase listar de EmpleadoDao
+     * @return
+     * @throws DaoException
+     * @throws DniException 
+     */
     public int cargarEmpleados() throws DaoException, DniException{
         int n=0;
         if(empleadoDao!=null){
@@ -167,6 +181,8 @@ public class SistemaNominas extends ComparadorSueldo {
                 n++;
                 }
             }
+        }else{
+           throw new DaoException("No se ha pudido encontrar la extension del fichero");
         }
         return n;
     }

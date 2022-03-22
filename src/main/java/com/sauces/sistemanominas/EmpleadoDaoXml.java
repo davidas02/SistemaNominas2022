@@ -14,8 +14,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -43,11 +41,11 @@ public class EmpleadoDaoXml implements EmpleadoDao{
     @Override
     public List<Empleado> listar() throws DaoException {
         XStream xstream=new XStream(new DomDriver());    
-        XStream.setupDefaultSecurity(xstream);
+        //XStream.setupDefaultSecurity(xstream);
         xstream.allowTypeHierarchy(EmpleadoFijo.class);
         xstream.allowTypeHierarchy(EmpleadoEventual.class);
         List<Empleado> listadoEmpleados;
-        Path path=Paths.get("empleados.xml");
+        
         try(BufferedReader br= Files.newBufferedReader(path);){
             listadoEmpleados=(List<Empleado>)xstream.fromXML(br);
         } catch (IOException ex) {
@@ -55,7 +53,12 @@ public class EmpleadoDaoXml implements EmpleadoDao{
         }
         return listadoEmpleados;
     }
-
+    /**
+     * 
+     * @param listado listado de empleados
+     * @return devuelve un fichero con formato xml
+     * @throws DaoException 
+     */
     @Override
     public int insertar(List<Empleado> listado) throws DaoException {
         XStream xstream=new XStream(new DomDriver());    
