@@ -56,9 +56,9 @@ public class EmpleadoDaoObj implements EmpleadoDao{
         return listado;
     }
     /**
-     * 
+     *  Metodo que devuelve un listado de empleados 
      * @param listado listado de empleados
-     * @return devuelve un fichero con formato obj
+     * @return Devuelve el numero de empleados almacenados
      * @throws DaoException 
      */
     @Override

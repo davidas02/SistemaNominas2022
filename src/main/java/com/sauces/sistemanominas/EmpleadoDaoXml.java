@@ -62,7 +62,7 @@ public class EmpleadoDaoXml implements EmpleadoDao{
     @Override
     public int insertar(List<Empleado> listado) throws DaoException {
         XStream xstream=new XStream(new DomDriver());    
-        XStream.setupDefaultSecurity(xstream);
+        //XStream.setupDefaultSecurity(xstream);
         xstream.allowTypeHierarchy(EmpleadoFijo.class);
         xstream.allowTypeHierarchy(EmpleadoEventual.class);
         try(BufferedWriter bw=Files.newBufferedWriter(path)){

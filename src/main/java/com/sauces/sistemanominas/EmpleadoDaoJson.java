@@ -40,8 +40,8 @@ public class EmpleadoDaoJson implements EmpleadoDao {
         this.path = path;
     }
     /**
-     * Metodo que devuelve una lista de empleados que se han añadido al sistema
-     * @return Devuelve una lista de empleados que se han añadido al sistema
+     * Metodo que devuelve una lista de empleados que se han añadido al sistema de un fihero con extension json
+     * @return Devuelve una lista de empleados que se han añadido al sistema de un fihero con extension json
      * @throws DaoException 
      */
     @Override
@@ -64,10 +64,10 @@ public class EmpleadoDaoJson implements EmpleadoDao {
         }
         return listadoEmpleados;
     }
-/**
+    /**
      * 
      * @param listado listado de empleados
-     * @return devuelve un fichero con formato xml
+     * @return devuelve un fichero con formato json
      * @throws DaoException 
      */
     @Override
