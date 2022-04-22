@@ -3,16 +3,17 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.sauces.sistemanominas;
+package com.sauces.sistemanominas.modelo;
 
 /**
  *
  * @author daw1
- */
-public class DniException extends Exception{
+ */ 
+public class DaoException extends Exception{
 
-    public DniException(String message) {
+    public DaoException(String message) {
         super(message);
     }
+
     
 }
