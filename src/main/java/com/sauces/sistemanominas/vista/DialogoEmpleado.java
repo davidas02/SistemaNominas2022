@@ -51,6 +51,11 @@ public class DialogoEmpleado extends javax.swing.JDialog {
         jLabel3.setText("TIPO");
 
         cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FIJO", "EVENTUAL" }));
+        cbTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("SALARIO");
 
@@ -143,6 +148,16 @@ public class DialogoEmpleado extends javax.swing.JDialog {
         setVisible(false);
     }//GEN-LAST:event_bCancelarActionPerformed
 
+    private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
+        if(cbTipo.getSelectedItem().equals("FIJO")){
+            this.jLabel5.setVisible(false);
+            this.spHoras.setVisible(false);
+        }else{
+            this.jLabel5.setVisible(true);
+            this.spHoras.setVisible(true);
+        }
+    }//GEN-LAST:event_cbTipoActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -197,7 +212,7 @@ public class DialogoEmpleado extends javax.swing.JDialog {
         return (String)cbTipo.getSelectedItem();
     }
     public float getSalario(){
-        return (float)tfSalario.getValue();
+        return Float.parseFloat(this.tfSalario.getText().replace(',','.'));
     }
     public int getHoras(){
         return (int)spHoras.getValue();

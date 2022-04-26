@@ -6,6 +6,9 @@
 package com.sauces.sistemanominas.vista;
 
 import com.sauces.sistemanominas.controlador.Controlador;
+import com.sauces.sistemanominas.modelo.Empleado;
+import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -29,7 +32,7 @@ public class Ventana extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        buttonGroup1 = new javax.swing.ButtonGroup();
+        grupoListado = new javax.swing.ButtonGroup();
         selectorFicheros = new javax.swing.JFileChooser();
         panelDatos = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
@@ -44,9 +47,11 @@ public class Ventana extends javax.swing.JFrame {
         tfSalario = new javax.swing.JFormattedTextField();
         bBorrar = new javax.swing.JButton();
         bModificar = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        jLabel6 = new javax.swing.JLabel();
+        spHoras = new javax.swing.JSpinner();
+        panelTabla = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tablaEmpleados = new javax.swing.JTable();
         bListar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         bDni = new javax.swing.JRadioButton();
@@ -76,40 +81,69 @@ public class Ventana extends javax.swing.JFrame {
 
         jLabel5.setText("INGRESOS");
 
+        tfDni.setEditable(false);
+
+        tfNombre.setEditable(false);
+
+        tfIngresos.setEditable(false);
+
         cbTipo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "FIJO", "EVENTUAL" }));
+        cbTipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbTipoActionPerformed(evt);
+            }
+        });
+
+        tfSalario.setEditable(false);
+        tfSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
 
         bBorrar.setText("BORRAR");
+        bBorrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                bBorrarActionPerformed(evt);
+            }
+        });
 
         bModificar.setText("MODIFICAR");
+
+        jLabel6.setText("HORAS");
+
+        spHoras.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         javax.swing.GroupLayout panelDatosLayout = new javax.swing.GroupLayout(panelDatos);
         panelDatos.setLayout(panelDatosLayout);
         panelDatosLayout.setHorizontalGroup(
             panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(panelDatosLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel2)
-                            .addComponent(jLabel4)
-                            .addComponent(jLabel3))
-                        .addGap(25, 25, 25)
-                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(tfNombre)
-                            .addComponent(cbTipo, 0, 104, Short.MAX_VALUE)
-                            .addComponent(tfSalario)
-                            .addComponent(tfDni)))
+                        .addComponent(bBorrar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(bModificar))
                     .addGroup(panelDatosLayout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(18, 18, 18)
-                        .addComponent(tfIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(panelDatosLayout.createSequentialGroup()
-                .addComponent(bBorrar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(bModificar)
+                        .addContainerGap()
+                        .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel3))
+                                .addGap(25, 25, 25)
+                                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(tfNombre)
+                                    .addComponent(cbTipo, 0, 104, Short.MAX_VALUE)
+                                    .addComponent(tfSalario)
+                                    .addComponent(tfDni)))
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addGap(18, 18, 18)
+                                .addComponent(tfIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(panelDatosLayout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(34, 34, 34)
+                                .addComponent(spHoras, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         panelDatosLayout.setVerticalGroup(
@@ -131,7 +165,11 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(tfSalario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(114, 114, 114)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(spHoras, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel6))
+                .addGap(83, 83, 83)
                 .addGroup(panelDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel5)
                     .addComponent(tfIngresos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -142,49 +180,40 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de empleados"));
+        panelTabla.setBorder(javax.swing.BorderFactory.createTitledBorder("Listado de empleados"));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(jTable1);
+        empleadoTM=new EmpleadoTableModel();
+        tablaEmpleados.setModel(empleadoTM);
+        jScrollPane1.setViewportView(tablaEmpleados);
 
         bListar.setText("LISTAR EMPLEADOS");
 
         jLabel7.setText("ORDEN DEL LISTADO");
 
-        buttonGroup1.add(bDni);
+        grupoListado.add(bDni);
         bDni.setText("DNI");
 
-        buttonGroup1.add(bNombre);
+        grupoListado.add(bNombre);
         bNombre.setText("NOMBRE");
 
-        buttonGroup1.add(bIngresos);
+        grupoListado.add(bIngresos);
         bIngresos.setText("INGRESOS");
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+        javax.swing.GroupLayout panelTablaLayout = new javax.swing.GroupLayout(panelTabla);
+        panelTabla.setLayout(panelTablaLayout);
+        panelTablaLayout.setHorizontalGroup(
+            panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTablaLayout.createSequentialGroup()
+                .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelTablaLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(panelTablaLayout.createSequentialGroup()
+                        .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(panelTablaLayout.createSequentialGroup()
                                 .addGap(166, 166, 166)
                                 .addComponent(bListar))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addGroup(panelTablaLayout.createSequentialGroup()
                                 .addContainerGap()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -196,15 +225,15 @@ public class Ventana extends javax.swing.JFrame {
                         .addGap(0, 116, Short.MAX_VALUE)))
                 .addContainerGap())
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
+        panelTablaLayout.setVerticalGroup(
+            panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelTablaLayout.createSequentialGroup()
                 .addGap(7, 7, 7)
                 .addComponent(bListar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 284, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(bDni)
                     .addComponent(bNombre)
@@ -225,6 +254,11 @@ public class Ventana extends javax.swing.JFrame {
         menuEmpelado.setText("Empleado");
 
         miNuevo.setText("Nuevo");
+        miNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                miNuevoActionPerformed(evt);
+            }
+        });
         menuEmpelado.add(miNuevo);
 
         miBuscar.setText("Buscar");
@@ -247,7 +281,7 @@ public class Ventana extends javax.swing.JFrame {
                 .addContainerGap()
                 .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(panelTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -255,7 +289,7 @@ public class Ventana extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(panelTabla, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(panelDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
@@ -268,9 +302,103 @@ public class Ventana extends javax.swing.JFrame {
     private void miBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miBuscarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_miBuscarActionPerformed
+
+    private void miNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoActionPerformed
+        // TODO add your handling code here:
+        if(dialogoEmpleado.mostrar()==DialogoEmpleado.ACEPTAR){
+            mostrarDni(dialogoEmpleado.getDni());
+            mostrarNombre(dialogoEmpleado.getNombre());
+            String tipo=dialogoEmpleado.getTipo();
+            mostarTipo(tipo);
+            mostrarSalario(dialogoEmpleado.getSalario());
+            if(tipo=="EVENTUAL"){
+                mostrarHoras(dialogoEmpleado.getHoras());
+            }
+        }
+    }//GEN-LAST:event_miNuevoActionPerformed
+
+    private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
+        // TODO add your handling code here:
+        if(cbTipo.getSelectedItem().equals("FIJO")){
+            this.jLabel6.setVisible(false);
+            this.spHoras.setVisible(false);
+        }else{
+            this.jLabel6.setVisible(true);
+            this.spHoras.setVisible(true);
+        }
+    }//GEN-LAST:event_cbTipoActionPerformed
+
+    private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
+        // TODO add your handling code here:
+       String dni= JOptionPane.showInputDialog("Introduce el DNI del empleado a despedir");
+       controla
+    }//GEN-LAST:event_bBorrarActionPerformed
     private Controlador controlador;
-    private DialogoEmpleado dialogoEmpleado;
-    
+    private DialogoEmpleado dialogoEmpleado=new DialogoEmpleado(this,true);
+    private EmpleadoTableModel empleadoTM;
+    public String getTipo(){
+        return (String)cbTipo.getSelectedItem();
+    }
+    public String getDni(){
+        return tfDni.getText();
+    }
+    public String getNombre(){
+        return tfNombre.getText();
+    }
+    public float getSalario(){
+        return Float.parseFloat(this.tfSalario.getText().replace(',','.'));
+    }
+    public int getHoras(){
+        return (int)spHoras.getValue();
+    }
+    public String getOrden(){
+        return"a";
+    }
+    public void mostarTipo(String tipo){
+        cbTipo.setSelectedItem(tipo);
+    }
+    public void mostrarDni(String dni){
+        tfDni.setText(dni);
+    }
+    public void mostrarNombre(String nombre){
+        tfNombre.setText(nombre);
+    }
+    public void mostrarSalario(float salario){
+        tfSalario.setValue(salario);
+    }
+    public void mostrarHoras(int horas){
+        spHoras.setValue(horas);
+    }
+    public void mostrarIngresos(float ingresos){
+        tfIngresos.setValue(ingresos);
+    }
+    public void listarEmpleados(List<Empleado> listado){
+        empleadoTM.setListado(listado);
+        empleadoTM.fireTableDataChanged();
+    }
+    public void mostrarMensaje(String mensaje){
+        JOptionPane.showMessageDialog(this, mensaje);
+    }
+    public boolean solicitarConfirmacion(){
+       if(JOptionPane.showConfirmDialog(this, "¿Confirmamos?", "Confirmacion", JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION){
+           return true;
+       }else{
+           return false;
+       }
+    }
+    public void setControlador(Controlador controlador) {
+        this.controlador = controlador;
+    }
+    public void limpiarCampos(){
+        tfDni.setText("");
+        tfNombre.setText("");
+        tfSalario.setValue(0);
+        spHoras.setValue(0);
+        tfIngresos.setValue(0);
+    }
+    public void mostrar(){
+    setVisible(true);
+    }
     /**
      * @param args the command line arguments
      */
@@ -313,18 +441,17 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JButton bListar;
     private javax.swing.JButton bModificar;
     private javax.swing.JRadioButton bNombre;
-    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbTipo;
+    private javax.swing.ButtonGroup grupoListado;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JMenuBar jMenuBar1;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JMenu menuArchivo;
     private javax.swing.JMenu menuEmpelado;
     private javax.swing.JMenuItem miAbrir;
@@ -332,7 +459,10 @@ public class Ventana extends javax.swing.JFrame {
     private javax.swing.JMenuItem miGuardar;
     private javax.swing.JMenuItem miNuevo;
     private javax.swing.JPanel panelDatos;
+    private javax.swing.JPanel panelTabla;
     private javax.swing.JFileChooser selectorFicheros;
+    private javax.swing.JSpinner spHoras;
+    private javax.swing.JTable tablaEmpleados;
     private javax.swing.JTextField tfDni;
     private javax.swing.JFormattedTextField tfIngresos;
     private javax.swing.JTextField tfNombre;
