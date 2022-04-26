@@ -59,6 +59,8 @@ public class DialogoEmpleado extends javax.swing.JDialog {
 
         jLabel4.setText("SALARIO");
 
+        tfSalario.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.NumberFormatter(new java.text.DecimalFormat("#0.00"))));
+
         bAceptar.setText("ACEPTAR");
         bAceptar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -222,7 +224,13 @@ public class DialogoEmpleado extends javax.swing.JDialog {
         setVisible(true);
         return opcion;
     }
-
+        public void limpiarCampos(){
+        tfDni.setText("");
+        tfNombre.setText("");
+        tfSalario.setValue(0);
+        spHoras.setValue(0);
+        cbTipo.setSelectedItem("FIJO");
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton bAceptar;
     private javax.swing.JButton bCancelar;

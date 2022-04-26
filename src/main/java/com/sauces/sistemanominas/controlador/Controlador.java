@@ -5,16 +5,19 @@
  */
 package com.sauces.sistemanominas.controlador;
 
+import com.sauces.sistemanominas.modelo.DaoException;
 import com.sauces.sistemanominas.modelo.Dni;
 import com.sauces.sistemanominas.modelo.DniException;
 import com.sauces.sistemanominas.modelo.Empleado;
+import com.sauces.sistemanominas.modelo.EmpleadoDao;
+import com.sauces.sistemanominas.modelo.EmpleadoDaoCsv;
+import com.sauces.sistemanominas.modelo.EmpleadoDaoJson;
+import com.sauces.sistemanominas.modelo.EmpleadoDaoObj;
+import com.sauces.sistemanominas.modelo.EmpleadoDaoXml;
 import com.sauces.sistemanominas.modelo.EmpleadoEventual;
 import com.sauces.sistemanominas.modelo.EmpleadoFijo;
 import com.sauces.sistemanominas.modelo.SistemaNominas;
 import com.sauces.sistemanominas.vista.Ventana;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.JOptionPane;
 
 /**
  *
@@ -30,24 +33,23 @@ public class Controlador {
     }
     public void crearEmpleado(){
         Empleado e=null;
-        if(vista.getTipo().equals("FIJO")){
-            try {
-                e=new EmpleadoFijo(new Dni(vista.getDni()), vista.getNombre(),vista.getSalario());
-            } catch (DniException ex) {
+         try {
+            if(vista.getTipo().equals("FIJO")){
+
+                    e=new EmpleadoFijo(new Dni(vista.getDni()), vista.getNombre(),vista.getSalario());
+
+            }else{
+                    e=new EmpleadoEventual(new Dni(vista.getDni()), vista.getNombre(),vista.getSalario(), vista.getHoras());
+            }
+            if(modelo.incluirEmpleado(e)){
+                vista.mostrarIngresos(e.ingresos());
+                vista.mostrarMensaje("Empleado contratado");
+            }else{
+                vista.mostrarMensaje("No se ha podico contratar al empleado");
+            }
+         } catch (DniException ex) {
             vista.mostrarMensaje(ex.getMessage());
-            }
-        }else{
-            try {
-                e=new EmpleadoEventual(new Dni(vista.getDni()), vista.getNombre(),vista.getSalario(), vista.getHoras());
-            } catch (DniException ex) {
-                vista.mostrarMensaje(ex.getMessage());
-            }
-        }
-        if(modelo.incluirEmpleado(e)){
-            vista.mostrarMensaje("Empleado contratado");
-        }else{
-            vista.mostrarMensaje("No se ha podico contratar al empleado");
-        }
+         }
     }
     public void buscarEmpleado() {
         String dni=vista.getDni();
@@ -68,16 +70,76 @@ public class Controlador {
         }
     }
     public void eliminarEmpleado(){
-        Empleado empleado;
+        Empleado empleado=null;
         try {
             empleado = modelo.getEmpleado(vista.getDni());
              if(modelo.eliminarEmpleado(empleado)){
                  vista.mostrarMensaje("Empleado Despedido");
-                 vista.limpiarCampos();
             }
         } catch (DniException ex) {
           vista.mostrarMensaje(ex.getMessage());
         }
+    }
+    public void modificarEmpleado(){
        
+    }
+    public void listarEmpleados(){
+       switch(vista.getOrden()){
+            case "DNI":
+                vista.listarEmpleados(modelo.listarEmpleadosPorDNI());
+                break;
+            case "NOMBRE":
+                vista.listarEmpleados(modelo.listarEmpleadosPorNombre());
+                break;
+            case "INGRESOS":
+                vista.listarEmpleados(modelo.listarEmpleadosPorSueldo());
+                break;
+            default:
+                vista.listarEmpleados(modelo.listarEmpleados());
+                break;
+        }
+        
+    }
+    public void guardarEmpleados(){
+    modelo.setEmpleadoDao(getDao(vista.getArchivo()));
+        try {
+           vista.mostrarMensaje("Se han guardado "+ modelo.guardarEmpleados()+" empleados");
+        } catch (DaoException ex) {
+           vista.mostrarMensaje(ex.getMessage());
+        }
+    }
+    public void cargarEmpleados() {
+        modelo.setEmpleadoDao(getDao(vista.getArchivo()));
+         try {
+           vista.mostrarMensaje("Se han cargado "+modelo.cargarEmpleados()+" empleados");
+        } catch (DaoException ex) {
+           vista.mostrarMensaje(ex.getMessage());
+        } catch (DniException ex) {
+            vista.mostrarMensaje(ex.getMessage());
+        }
+         
+    }
+    public void iniciar(){
+        vista.mostrar();
+    }
+    private static EmpleadoDao getDao(String fichero) {
+        EmpleadoDao ed = null;
+        int posPunto = fichero.lastIndexOf(".") + 1;
+        String extension = fichero.substring(posPunto);
+        switch (extension) {
+            case "csv":
+                ed = new EmpleadoDaoCsv(fichero);
+                break;
+            case "obj":
+                ed = new EmpleadoDaoObj(fichero);
+                break;
+            case "xml":
+                ed = new EmpleadoDaoXml(fichero);
+                break;
+            case "json":
+                ed = new EmpleadoDaoJson(fichero);
+                break;
+        }
+        return ed;
     }
 }
