@@ -69,7 +69,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        com.sauces.sistemanominas.SN
+                                        com.sauces.sistemanominas.SNVentana
                                     </mainClass>
                                 </manifest>
                             </archive>

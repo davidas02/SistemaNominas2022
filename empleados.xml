@@ -1,5 +1,5 @@
 <list>
-  <com.sauces.sistemanominas.EmpleadoEventual>
+  <com.sauces.sistemanominas.modelo.EmpleadoEventual>
     <dni>
       <numero>21742103</numero>
       <letra>L</letra>
@@ -7,13 +7,13 @@
     <nombre>Raul</nombre>
     <salarioHora>10.0</salarioHora>
     <horas>100</horas>
-  </com.sauces.sistemanominas.EmpleadoEventual>
-  <com.sauces.sistemanominas.EmpleadoFijo>
+  </com.sauces.sistemanominas.modelo.EmpleadoEventual>
+  <com.sauces.sistemanominas.modelo.EmpleadoFijo>
     <dni>
       <numero>21742104</numero>
       <letra>C</letra>
     </dni>
     <nombre>David</nombre>
     <salario>1100.0</salario>
-  </com.sauces.sistemanominas.EmpleadoFijo>
+  </com.sauces.sistemanominas.modelo.EmpleadoFijo>
 </list>

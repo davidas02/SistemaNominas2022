@@ -51,7 +51,7 @@ public class EmpleadoDaoObj implements EmpleadoDao{
         } catch (ClassNotFoundException ex) {
             throw new DaoException(ex.getMessage());
         } catch (IOException ex) {
-           throw new DaoException(ex.getMessage());
+           throw new DaoException(ex.toString());
         }
         return listado;
     }

@@ -18,6 +18,8 @@ import com.sauces.sistemanominas.modelo.EmpleadoEventual;
 import com.sauces.sistemanominas.modelo.EmpleadoFijo;
 import com.sauces.sistemanominas.modelo.SistemaNominas;
 import com.sauces.sistemanominas.vista.Ventana;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -39,7 +41,7 @@ public class Controlador {
                     e=new EmpleadoFijo(new Dni(vista.getDni()), vista.getNombre(),vista.getSalario());
 
             }else{
-                    e=new EmpleadoEventual(new Dni(vista.getDni()), vista.getNombre(),vista.getSalario(), vista.getHoras());
+                   e=new EmpleadoEventual(new Dni(vista.getDni()), vista.getNombre(),vista.getSalario(), vista.getHoras());
             }
             if(modelo.incluirEmpleado(e)){
                 vista.mostrarIngresos(e.ingresos());
@@ -73,7 +75,8 @@ public class Controlador {
         Empleado empleado=null;
         try {
             empleado = modelo.getEmpleado(vista.getDni());
-             if(modelo.eliminarEmpleado(empleado)){
+            
+             if(vista.solicitarConfirmacion()&&modelo.eliminarEmpleado(empleado)){
                  vista.mostrarMensaje("Empleado Despedido");
             }
         } catch (DniException ex) {
@@ -81,7 +84,23 @@ public class Controlador {
         }
     }
     public void modificarEmpleado(){
-       
+        if(vista.solicitarConfirmacion()){
+          String dni=vista.getDni();
+            try {
+                Empleado e=modelo.getEmpleado(dni);
+                e.setNombre(vista.getNombre());
+                if(e instanceof EmpleadoFijo){
+                    ((EmpleadoFijo) e).setSalario(vista.getSalario());
+                }else{
+                    if(e instanceof EmpleadoEventual){
+                        ((EmpleadoEventual) e).setHoras(vista.getHoras());
+                        ((EmpleadoEventual) e).setSalarioHora(vista.getSalario());
+                    }
+                }
+            } catch (DniException ex) {
+                vista.mostrarMensaje(ex.getMessage());
+            }
+        }
     }
     public void listarEmpleados(){
        switch(vista.getOrden()){

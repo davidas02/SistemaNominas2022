@@ -14,7 +14,7 @@ import java.util.regex.Pattern;
  *  Clase dni 
  * @author David Aparicio Sir
  */
-public class Dni implements Comparable<Dni>,Serializable{
+public class Dni implements Comparable<Dni>, Serializable{
     private String numero;
     private char letra;
     public Dni() {

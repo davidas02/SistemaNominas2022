@@ -58,6 +58,8 @@ public class EmpleadoTableModel extends AbstractTableModel {
             case 3 :
                 if(e instanceof EmpleadoEventual){
                     o=((EmpleadoEventual) e).getHoras();
+                }else{
+                    o=0;
                 }
                 break;
             case 4 :

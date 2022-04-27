@@ -127,13 +127,19 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <EmptySpace max="-2" attributes="0"/>
-                  <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                      <Group type="102" attributes="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" alignment="0" attributes="0">
+                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="tfIngresos" min="-2" pref="104" max="-2" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="jLabel1" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel2" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel4" alignment="0" min="-2" max="-2" attributes="0"/>
                               <Component id="jLabel3" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="jLabel6" alignment="0" min="-2" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -141,17 +147,8 @@
                               <Component id="cbTipo" pref="104" max="32767" attributes="0"/>
                               <Component id="tfSalario" max="32767" attributes="0"/>
                               <Component id="tfDni" alignment="0" max="32767" attributes="0"/>
+                              <Component id="spHoras" max="32767" attributes="0"/>
                           </Group>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="tfIngresos" min="-2" pref="104" max="-2" attributes="0"/>
-                      </Group>
-                      <Group type="102" alignment="0" attributes="0">
-                          <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                          <Component id="tfHoras" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace min="-2" pref="16" max="-2" attributes="0"/>
@@ -190,7 +187,7 @@
                   <EmptySpace max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                      <Component id="tfHoras" min="-2" max="-2" attributes="0"/>
+                      <Component id="spHoras" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace min="-2" pref="83" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="1" attributes="0">
@@ -239,9 +236,6 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="tfNombre">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="tfIngresos">
           <Properties>
@@ -259,6 +253,7 @@
                 <StringItem index="1" value="EVENTUAL"/>
               </StringArray>
             </Property>
+            <Property name="enabled" type="boolean" value="false"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="cbTipoActionPerformed"/>
@@ -269,7 +264,6 @@
         </Component>
         <Component class="javax.swing.JFormattedTextField" name="tfSalario">
           <Properties>
-            <Property name="editable" type="boolean" value="false"/>
             <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
               <Format format="#0.00" subtype="-1" type="0"/>
             </Property>
@@ -287,19 +281,16 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="MODIFICAR"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="bModificarActionPerformed"/>
+          </Events>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel6">
           <Properties>
             <Property name="text" type="java.lang.String" value="HORAS"/>
           </Properties>
         </Component>
-        <Component class="javax.swing.JFormattedTextField" name="tfHoras">
-          <Properties>
-            <Property name="editable" type="boolean" value="false"/>
-            <Property name="formatterFactory" type="javax.swing.JFormattedTextField$AbstractFormatterFactory" editor="org.netbeans.modules.form.editors.AbstractFormatterFactoryEditor">
-              <Format subtype="1" type="0"/>
-            </Property>
-          </Properties>
+        <Component class="javax.swing.JSpinner" name="spHoras">
         </Component>
       </SubComponents>
     </Container>
@@ -317,10 +308,6 @@
           <Group type="103" groupAlignment="0" attributes="0">
               <Group type="102" attributes="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
-                      </Group>
                       <Group type="102" attributes="0">
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
@@ -339,6 +326,10 @@
                               </Group>
                           </Group>
                           <EmptySpace min="0" pref="110" max="32767" attributes="0"/>
+                      </Group>
+                      <Group type="102" alignment="0" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Component id="jScrollPane1" pref="0" max="32767" attributes="0"/>
                       </Group>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -366,6 +357,13 @@
       </Layout>
       <SubComponents>
         <Container class="javax.swing.JScrollPane" name="jScrollPane1">
+          <Properties>
+            <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+              <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
+                <LineBorder/>
+              </Border>
+            </Property>
+          </Properties>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
@@ -376,7 +374,7 @@
                 </Property>
               </Properties>
               <AuxValues>
-                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tablaEmpleados.getSelectionModel().addListSelectionListener(new ListSelectionListener(){&#xa;    public void valueChanged(ListSelectionEvent lse){&#xa;        int fila=tablaEmpleados.getSelectedRow();&#xa;        if(fila&gt;=0){&#xa;            mostrarDni((String)tablaEmpleados.getValueAt(fila, 0));&#xa;            mostrarNombre((String)tablaEmpleados.getValueAt(fila,1));&#xa;            mostrarSalario((float)tablaEmpleados.getValueAt(fila, 2));&#xa;            mostrarHoras((int)tablaEmpleados.getValueAt(fila,3));&#xa;            mostrarIngresos((float)tablaEmpleados.getValueAt(fila,4));&#xa;        }&#xa;    }&#xa;});"/>
+                <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="tablaEmpleados.getSelectionModel().addListSelectionListener(&#xa;new ListSelectionListener(){&#xa;    public void valueChanged(ListSelectionEvent lse){&#xa;        int fila=tablaEmpleados.getSelectedRow();&#xa;        if(fila&gt;=0){&#xa;            mostrarDni(tablaEmpleados.getValueAt(fila,0).toString());&#xa;            mostrarNombre((String)tablaEmpleados.getValueAt(fila, 1));&#xa;            mostrarSalario((float)tablaEmpleados.getValueAt(fila,2));&#xa;            int horas=(int)tablaEmpleados.getValueAt(fila,3);&#xa;            mostrarHoras(horas);&#xa;            if(horas==0){&#xa;                mostrarTipo(&quot;FIJO&quot;);&#xa;            }else{&#xa;                mostrarTipo(&quot;EVENTUAL&quot;);&#xa;            }&#xa;            mostrarIngresos((float)tablaEmpleados.getValueAt(fila,4));&#xa;        }&#xa;    }&#xa;});"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePre" type="java.lang.String" value="empleadoTM=new EmpleadoTableModel();"/>
               </AuxValues>
             </Component>
@@ -400,6 +398,7 @@
             <Property name="buttonGroup" type="javax.swing.ButtonGroup" editor="org.netbeans.modules.form.RADComponent$ButtonGroupPropertyEditor">
               <ComponentRef name="grupoListado"/>
             </Property>
+            <Property name="selected" type="boolean" value="true"/>
             <Property name="text" type="java.lang.String" value="DNI"/>
           </Properties>
         </Component>
