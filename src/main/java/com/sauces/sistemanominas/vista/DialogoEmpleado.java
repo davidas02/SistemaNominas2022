@@ -146,7 +146,7 @@ public class DialogoEmpleado extends javax.swing.JDialog {
 
     private void bCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bCancelarActionPerformed
         // TODO add your handling code here:
-        opcion=ACEPTAR;
+        opcion=CANCELAR;
         setVisible(false);
     }//GEN-LAST:event_bCancelarActionPerformed
 

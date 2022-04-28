@@ -18,8 +18,6 @@ import com.sauces.sistemanominas.modelo.EmpleadoEventual;
 import com.sauces.sistemanominas.modelo.EmpleadoFijo;
 import com.sauces.sistemanominas.modelo.SistemaNominas;
 import com.sauces.sistemanominas.vista.Ventana;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
@@ -28,11 +26,18 @@ import java.util.logging.Logger;
 public class Controlador {
     private Ventana vista;
     private SistemaNominas modelo;
-
+/**
+ * 
+ * @param vista
+ * @param modelo 
+ */
     public Controlador(Ventana vista, SistemaNominas modelo) {
         this.vista = vista;
         this.modelo = modelo;
     }
+    /**
+     * Metodo que recoge de la ventana los valores necesarios para crear un empleado
+     */
     public void crearEmpleado(){
         Empleado e=null;
          try {
@@ -53,6 +58,9 @@ public class Controlador {
             vista.mostrarMensaje(ex.getMessage());
          }
     }
+    /**
+     * Metodo que recoge el DNI del empleado para buscarlo y poderlo mostrar
+     */
     public void buscarEmpleado() {
         String dni=vista.getDni();
         try {
@@ -62,46 +70,67 @@ public class Controlador {
                vista.mostrarIngresos(e.ingresos());
                if(e instanceof EmpleadoFijo){
                    vista.mostrarSalario(((EmpleadoFijo) e).getSalario());
+                   vista.mostrarTipo("FIJO");
                }else{
                    vista.mostrarSalario(((EmpleadoEventual)e).getSalarioHora());
                    vista.mostrarHoras(((EmpleadoEventual)e).getHoras());
+                   vista.mostrarTipo("EVENTUAL");
                }
+           }else{
+           vista.mostrarMensaje("No existe empleado con ese DNI");
+           vista.limpiarCampos();
            }
         } catch (DniException ex) {
             vista.mostrarMensaje(ex.getMessage());
         }
     }
+    /**
+     * Metodo que busca y elimina un empleado del sistema
+     */
     public void eliminarEmpleado(){
         Empleado empleado=null;
         try {
             empleado = modelo.getEmpleado(vista.getDni());
             
-             if(vista.solicitarConfirmacion()&&modelo.eliminarEmpleado(empleado)){
+             if(empleado!=null){
+                 if(vista.solicitarConfirmacion()&&modelo.eliminarEmpleado(empleado)){
                  vista.mostrarMensaje("Empleado Despedido");
-            }
+                 }
+            }else{
+             vista.mostrarMensaje("No existe empleado con ese DNI");
+             }
         } catch (DniException ex) {
           vista.mostrarMensaje(ex.getMessage());
         }
     }
+    /**
+     * Metodo que recoge por ventana los datos a modificar y los modifica
+     */
     public void modificarEmpleado(){
         if(vista.solicitarConfirmacion()){
           String dni=vista.getDni();
             try {
                 Empleado e=modelo.getEmpleado(dni);
-                e.setNombre(vista.getNombre());
-                if(e instanceof EmpleadoFijo){
-                    ((EmpleadoFijo) e).setSalario(vista.getSalario());
-                }else{
-                    if(e instanceof EmpleadoEventual){
-                        ((EmpleadoEventual) e).setHoras(vista.getHoras());
-                        ((EmpleadoEventual) e).setSalarioHora(vista.getSalario());
+                if(e!=null){
+                    e.setNombre(vista.getNombre());
+                    if(e instanceof EmpleadoFijo){
+                        ((EmpleadoFijo) e).setSalario(vista.getSalario());
+                    }else{
+                        if(e instanceof EmpleadoEventual){
+                            ((EmpleadoEventual) e).setHoras(vista.getHoras());
+                            ((EmpleadoEventual) e).setSalarioHora(vista.getSalario());
+                        }
                     }
+                    vista.mostrarIngresos(e.ingresos());
                 }
             } catch (DniException ex) {
                 vista.mostrarMensaje(ex.getMessage());
             }
         }
     }
+    /**
+     * Metodo que recoge el orden por ventana y Lista segun el DNI, nombre o ingresos en orden creciente
+     */
     public void listarEmpleados(){
        switch(vista.getOrden()){
             case "DNI":
@@ -113,12 +142,13 @@ public class Controlador {
             case "INGRESOS":
                 vista.listarEmpleados(modelo.listarEmpleadosPorSueldo());
                 break;
-            default:
-                vista.listarEmpleados(modelo.listarEmpleados());
-                break;
+            
         }
         
     }
+    /**
+     * Metodo que recoge la ruta del fichero a guardar, utiliza el metodo guardarEmpleados de SistemaNominas para guardarlo
+     */
     public void guardarEmpleados(){
     modelo.setEmpleadoDao(getDao(vista.getArchivo()));
         try {
@@ -127,6 +157,9 @@ public class Controlador {
            vista.mostrarMensaje(ex.getMessage());
         }
     }
+    /**
+     * Metodo que recoge la ruta del fichero a cargar, utiliza el metodo cargarEmpleados de SistemaNominas para cargarlo
+     */
     public void cargarEmpleados() {
         modelo.setEmpleadoDao(getDao(vista.getArchivo()));
          try {
@@ -136,12 +169,19 @@ public class Controlador {
         } catch (DniException ex) {
             vista.mostrarMensaje(ex.getMessage());
         }
-         
     }
+    /**
+     * Metodo que inicia la ventana
+     */
     public void iniciar(){
         vista.mostrar();
     }
-    private static EmpleadoDao getDao(String fichero) {
+    /**
+     * 
+     * @param fichero
+     * @return 
+     */
+    private EmpleadoDao getDao(String fichero) {
         EmpleadoDao ed = null;
         int posPunto = fichero.lastIndexOf(".") + 1;
         String extension = fichero.substring(posPunto);

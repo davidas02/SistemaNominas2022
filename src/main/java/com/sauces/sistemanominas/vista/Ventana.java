@@ -73,7 +73,6 @@ public class Ventana extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Sistema de nóminas");
-        setResizable(false);
 
         panelDatos.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos del empleado"));
 
@@ -237,24 +236,23 @@ public class Ventana extends javax.swing.JFrame {
                 .addGroup(panelTablaLayout.createSequentialGroup()
                     .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(panelTablaLayout.createSequentialGroup()
-                            .addGroup(panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addGroup(panelTablaLayout.createSequentialGroup()
-                                    .addGap(166, 166, 166)
-                                    .addComponent(bListar))
-                                .addGroup(panelTablaLayout.createSequentialGroup()
-                                    .addContainerGap()
-                                    .addComponent(jLabel7)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(bDni)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(bNombre)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                    .addComponent(bIngresos)))
+                            .addContainerGap()
+                            .addComponent(jLabel7)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(bDni)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(bNombre)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(bIngresos)
                             .addGap(0, 110, Short.MAX_VALUE))
                         .addGroup(panelTablaLayout.createSequentialGroup()
                             .addContainerGap()
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)))
                     .addContainerGap())
+                .addGroup(panelTablaLayout.createSequentialGroup()
+                    .addGap(139, 139, 139)
+                    .addComponent(bListar)
+                    .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             );
             panelTablaLayout.setVerticalGroup(
                 panelTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,13 +337,19 @@ public class Ventana extends javax.swing.JFrame {
 
             pack();
         }// </editor-fold>//GEN-END:initComponents
-
+/**
+ * Metodo que recoge un DNI para enviarlo al metodo buscarEmpleado del controlador
+ * @param evt 
+ */
     private void miBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miBuscarActionPerformed
         // TODO add your handling code here:
          mostrarDni(JOptionPane.showInputDialog("Introduce el DNI del empleado a buscar"));
          controlador.buscarEmpleado();
     }//GEN-LAST:event_miBuscarActionPerformed
-
+/**
+ * Metodo que recoge del dialogo de empleados los datos y los envia al metodo crearEmpleado del Controlador para crear un nuevo empleado
+ * @param evt 
+ */
     private void miNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miNuevoActionPerformed
         // TODO add your handling code here:
         dialogoEmpleado.limpiarCampos();
@@ -362,7 +366,11 @@ public class Ventana extends javax.swing.JFrame {
         }
         
     }//GEN-LAST:event_miNuevoActionPerformed
-
+/**
+ * Metodo que hace visible o invisible las horas trabajadas en funcion del tipo de trabajador
+ *  Si es fijo se hace invisible y si es eventual se hace visible
+ * @param evt 
+ */
     private void cbTipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbTipoActionPerformed
         // TODO add your handling code here:
         if(cbTipo.getSelectedItem().equals("FIJO")){
@@ -373,55 +381,95 @@ public class Ventana extends javax.swing.JFrame {
             this.spHoras.setVisible(true);
         }
     }//GEN-LAST:event_cbTipoActionPerformed
-
+/**
+ * Metodo que pide un DNI para borrar y llama al metodo eliminarEmpleado del controlador
+ * @param evt 
+ */
     private void bBorrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bBorrarActionPerformed
         // TODO add your handling code here:
         mostrarDni(JOptionPane.showInputDialog("Introduce el DNI del empleado a despedir"));
        controlador.eliminarEmpleado();
        limpiarCampos();
     }//GEN-LAST:event_bBorrarActionPerformed
-
+/**
+ * Metodo que lista todos los empleados
+ * @param evt 
+ */
     private void bListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bListarActionPerformed
         // TODO add your handling code here:
         controlador.listarEmpleados();
     }//GEN-LAST:event_bListarActionPerformed
-
+/**
+ * Metodo que selecciona un fichero para cargar y llama al metodo cargarEmpleados del controlador
+ * @param evt 
+ */
     private void miAbrirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miAbrirActionPerformed
         // TODO add your handling code here:
         if(selectorFicheros.showOpenDialog(this)==JFileChooser.APPROVE_OPTION){
             controlador.cargarEmpleados();
         }
     }//GEN-LAST:event_miAbrirActionPerformed
-
+/**
+ * Metodo que selecciona un fichero para guardar y llama al metodo guardarEmpleados del controlador
+ * @param evt 
+ */
     private void miGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_miGuardarActionPerformed
         // TODO add your handling code here:
          if(selectorFicheros.showSaveDialog(this)==JFileChooser.APPROVE_OPTION){
         controlador.guardarEmpleados();
          }
     }//GEN-LAST:event_miGuardarActionPerformed
-
+/**
+ * Metodo que llama al metodo modificarEmpleado del controlador
+ * @param evt 
+ */
     private void bModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_bModificarActionPerformed
         // TODO add your handling code here:
         controlador.modificarEmpleado();
     }//GEN-LAST:event_bModificarActionPerformed
+
     private Controlador controlador;
     private DialogoEmpleado dialogoEmpleado=new DialogoEmpleado(this,true);
     private EmpleadoTableModel empleadoTM;
+    /**
+     * Metodo que recoge el tipo de empleado
+     * @return devuelve el tipo de empleado
+     */
     public String getTipo(){
         return (String)cbTipo.getSelectedItem();
     }
+    /**
+     * Metodo que recoge el dni del empleado
+     * @return devuelve el dni del empleado
+     */
     public String getDni(){
         return tfDni.getText();
     }
+    /**
+     * Metodo que recoge el nombre del empleado
+     * @return devuelve el nombre del empleado
+     */
     public String getNombre(){
         return tfNombre.getText();
     }
+    /**
+     * Metodo que recoge el salario del empleado
+     * @return devuelve el salario del empleado
+     */
     public float getSalario(){
         return Float.parseFloat(this.tfSalario.getText().replace(',','.'));
     }
+   /**
+    * Metodo que recoge las horas trabajadas por el EmpleadoEventual
+    * @return devuelve las horas trabajadas por el EmpleadoEventual
+    */
     public int getHoras(){
         return (int)spHoras.getValue();
     }
+    /**
+     * Metodo que recoge el orden del fichero
+     * @return devuelve el orden del fichero
+     */
     public String getOrden(){
        if(bDni.isSelected()){
            return"DNI";
@@ -433,34 +481,75 @@ public class Ventana extends javax.swing.JFrame {
             }
        }
     }
+    /**
+     * Metodo que muestra el tipo de trabajadores que hay 
+     * FIJO o EVENTUAL
+     * @param tipo tipo del trabajador FIJO o EVENTUAL
+     */
     public void mostrarTipo(String tipo){
         cbTipo.setSelectedItem(tipo);
     }
+    /**
+     * Metodo que muestra el DNI del trabajador
+     * @param dni dni del trabajador
+     */
     public void mostrarDni(String dni){
         tfDni.setText(dni);
     }
+    /**
+     * Metodo que muestra el nombre del trabajador
+     * @param nombre nombre del trabajador
+     */
     public void mostrarNombre(String nombre){
         tfNombre.setText(nombre);
     }
+    /**
+     * Metodo que muestra el salario del trabajador
+     * @param salario Salario del trabajador
+     */
     public void mostrarSalario(float salario){
         tfSalario.setValue(salario);
     }
+    /**
+     * Metodo que muestra las horas trabajadas del EmpleadoEventual
+     * @param horas horas trabajadas por el EmpleadoEventual
+     */
     public void mostrarHoras(int horas){
         spHoras.setValue(horas);
     }
+    /**
+     * Metodo que recoge el fichero donde se va a guardar o se va a cargar los empleados
+     * @return devuelve la ruta absoluta del fichero
+     */
     public String getArchivo(){
         return selectorFicheros.getSelectedFile().getAbsolutePath();
     }
+    /**
+     * Metodo que muestra los ingresos del empleado
+     * @param ingresos ingresos del empeleado
+     */
     public void mostrarIngresos(float ingresos){
         tfIngresos.setValue(ingresos);
     }
+    /**
+     * Metodo que lista los empleados en la tabla lateral
+     * @param listado listado de empleados
+     */
     public void listarEmpleados(List<Empleado> listado){
         empleadoTM.setListado(listado);
         empleadoTM.fireTableDataChanged();
     }
+    /**
+     * Metodo que muestra un mensaje por pantalla
+     * @param mensaje mensaje a mostrar
+     */
     public void mostrarMensaje(String mensaje){
         JOptionPane.showMessageDialog(this, mensaje);
     }
+    /**
+     * Metodo que solicita confirmacion para borrar o modificar
+     * @return devuelve true si pulsamos en si y false si pulsamos en borrar o en cancelar
+     */
     public boolean solicitarConfirmacion(){
        if(JOptionPane.showConfirmDialog(this, "¿Confirmamos?", "Confirmacion", JOptionPane.YES_NO_CANCEL_OPTION)==JOptionPane.YES_OPTION){
            return true;
@@ -468,9 +557,16 @@ public class Ventana extends javax.swing.JFrame {
            return false;
        }
     }
+    /**
+     * Establece el controlador actual
+     * @param controlador 
+     */
     public void setControlador(Controlador controlador) {
         this.controlador = controlador;
     }
+    /**
+     * Metodo que limpia los campos de datos
+     */
     public void limpiarCampos(){
         tfDni.setText("");
         tfNombre.setText("");
@@ -479,6 +575,9 @@ public class Ventana extends javax.swing.JFrame {
         tfIngresos.setValue(0);
         cbTipo.setSelectedItem("FIJO");
     }
+    /**
+     * Metodo que muestra la ventana
+     */
     public void mostrar(){
     setVisible(true);
     }

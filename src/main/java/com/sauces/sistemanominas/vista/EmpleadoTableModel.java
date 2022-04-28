@@ -83,6 +83,7 @@ public class EmpleadoTableModel extends AbstractTableModel {
             case 3: clase= Integer.class;
             break;
             case 4: clase=Float.class;
+            break;
         }
         return clase;
     }
